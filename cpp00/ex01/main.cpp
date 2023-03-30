@@ -27,12 +27,12 @@ int str_is(int (*function_is)(int), std::string str)
 
 void get_contact(PhoneBook &data, std::string &field)
 {
-	std::string input;
 	if (data.contact_index == 0)
 	{
 		std::cout << "PhoneBook is empty." << std::endl << std::endl;
 		return;
 	}
+	std::string input;
 	while (true)
 	{
 		std::cout << "Enter index: ";
@@ -42,20 +42,24 @@ void get_contact(PhoneBook &data, std::string &field)
 			std::cout << "EXIT" << std::endl;
 			break;
 		}
-		else if ((data.array_is_full == true) || (str_is(&std::isdigit, input) && ft_stoi(input) > 0 && ft_stoi(input) <= data.contact_index))
+		else if (!input.empty() && ((data.array_is_full == true) ||
+				(str_is(&std::isdigit, input) && ft_stoi(input) > 0 && ft_stoi(input) <= data.contact_index)))
 		{
 			field = input;
 			break;
 		}
-		std::cerr << "Invalid input, try again." << std::endl;
+		else if (input.empty())
+			std::cerr << "Field is empty, try again." << std::endl;
+		else
+			std::cerr << "Invalid input, try again." << std::endl;
+		
 	}
-	std::cout << "----------------------------------------------" << std::endl <<
-	std::endl << "First name:\t" << data.contact[ft_stoi(input)-1].first_name << std::endl <<
-	std::endl << "Last name:\t" << data.contact[ft_stoi(input)-1].last_name << std::endl <<
-	std::endl << "Nickname:\t" << data.contact[ft_stoi(input)-1].nickname << std::endl <<
-	std::endl << "Phone number:\t" << data.contact[ft_stoi(input)-1].phone_number << std::endl <<
-	std::endl << "Darkest secret:\t" << data.contact[ft_stoi(input)-1].darkest_secret << std::endl <<
-	std::endl << "----------------------------------------------" << std::endl;
+	std::cout <<
+	std::endl << "\tFirst name:\t" << data.contact[ft_stoi(input)-1].first_name <<
+	std::endl << "\tLast name:\t" << data.contact[ft_stoi(input)-1].last_name <<
+	std::endl << "\tNickname:\t" << data.contact[ft_stoi(input)-1].nickname <<
+	std::endl << "\tPhone number:\t" << data.contact[ft_stoi(input)-1].phone_number <<
+	std::endl << "\tDarkest secret:\t" << data.contact[ft_stoi(input)-1].darkest_secret << std::endl << std::endl;
 }
 
 void get_input(const std::string &message, std::string &field, int (*function_is)(int))
@@ -70,12 +74,15 @@ void get_input(const std::string &message, std::string &field, int (*function_is
 			std::cout << "EXIT" << std::endl;
 			break;
 		}
-		else if (str_is(function_is, input))
+		else if (!input.empty() && str_is(function_is, input))
 		{
 			field = input;
 			break;
 		}
-		std::cerr << "Invalid input, try again." << std::endl;
+		else if (input.empty())
+			std::cerr << "Field is empty, try again." << std::endl;
+		else
+			std::cerr << "Invalid input, try again." << std::endl;
 	}
 }
 
