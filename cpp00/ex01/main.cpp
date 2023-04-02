@@ -42,8 +42,9 @@ void get_contact(PhoneBook &data, std::string &field)
 			std::cout << "EXIT" << std::endl;
 			break;
 		}
-		else if (!input.empty() && ((data.array_is_full == true) ||
-				(str_is(&std::isdigit, input) && ft_stoi(input) > 0 && ft_stoi(input) <= data.contact_index)))
+		else if (!input.empty() && str_is(&std::isdigit, input) && ft_stoi(input) >= 1 &&
+				((data.array_is_full == true && ft_stoi(input) <= 8) ||
+				(data.array_is_full == false && ft_stoi(input) <= data.contact_index)))
 		{
 			field = input;
 			break;
@@ -55,11 +56,11 @@ void get_contact(PhoneBook &data, std::string &field)
 		
 	}
 	std::cout <<
-	std::endl << "\tFirst name:\t" << data.contact[ft_stoi(input)-1].first_name <<
-	std::endl << "\tLast name:\t" << data.contact[ft_stoi(input)-1].last_name <<
-	std::endl << "\tNickname:\t" << data.contact[ft_stoi(input)-1].nickname <<
-	std::endl << "\tPhone number:\t" << data.contact[ft_stoi(input)-1].phone_number <<
-	std::endl << "\tDarkest secret:\t" << data.contact[ft_stoi(input)-1].darkest_secret << std::endl << std::endl;
+	std::endl << "\tFirst name:\t" << data.contact[ft_stoi(input)-1].Contact::get_first_name() <<
+	std::endl << "\tLast name:\t" << data.contact[ft_stoi(input)-1].Contact::get_last_name() <<
+	std::endl << "\tNickname:\t" << data.contact[ft_stoi(input)-1].Contact::get_nickname() <<
+	std::endl << "\tPhone number:\t" << data.contact[ft_stoi(input)-1].Contact::get_phone_number() <<
+	std::endl << "\tDarkest secret:\t" << data.contact[ft_stoi(input)-1].Contact::get_darkest_secret() << std::endl << std::endl;
 }
 
 void get_input(const std::string &message, std::string &field, int (*function_is)(int))
@@ -94,11 +95,17 @@ void add_contact(PhoneBook &data)
 		data.array_is_full = true;
 	}
 	std::cout << std::endl << "- Contact " << (int)(data.contact_index + 1) << " -" << std::endl;
-	get_input("Enter first name: ", data.contact[data.contact_index].first_name, &std::isalnum);
-	get_input("Enter last name: ", data.contact[data.contact_index].last_name, &std::isalnum);
-	get_input("Enter nickname: ", data.contact[data.contact_index].nickname, &std::isalnum);
-	get_input("Enter phone number: ", data.contact[data.contact_index].phone_number, &std::isdigit);
-	get_input("Enter darkest secret: ", data.contact[data.contact_index].darkest_secret, &std::isalnum);
+	std::string first_name, last_name, nickname, phone_number, darkest_secret;
+	get_input("Enter first name: ", first_name, &std::isalnum);
+	get_input("Enter last name: ", last_name, &std::isalnum);
+	get_input("Enter nickname: ", nickname, &std::isalnum);
+	get_input("Enter phone number: ", phone_number, &std::isdigit);
+	get_input("Enter darkest secret: ", darkest_secret, &std::isalnum);
+	data.contact[data.contact_index].set_first_name(first_name);
+	data.contact[data.contact_index].set_last_name(last_name);
+	data.contact[data.contact_index].set_nickname(nickname);
+	data.contact[data.contact_index].set_phone_number(phone_number);
+	data.contact[data.contact_index].set_darkest_secret(darkest_secret);
 	data.contact_index++;
 	std::cout << std::endl;
 }
@@ -147,9 +154,9 @@ int main(int ac, char **av)
 			while (i < 8)
 			{
 				std::cout << "|  " << (int)(i+1) << "  | " <<
-				format_input(data.contact[i].first_name) << " | " <<
-				format_input(data.contact[i].last_name) << " | " <<
-				format_input(data.contact[i].nickname) << " |" << std::endl;
+				format_input(data.contact[i].get_first_name()) << " | " <<
+				format_input(data.contact[i].get_last_name()) << " | " <<
+				format_input(data.contact[i].get_nickname()) << " |" << std::endl;
 				std::cout << "----------------------------------------------" << std::endl;
 				i++;
 			}
