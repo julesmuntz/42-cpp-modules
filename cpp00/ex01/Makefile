@@ -1,4 +1,6 @@
-SRC			=		main.cpp
+SRC			=		main.cpp		\
+					Contact.cpp		\
+
 OBJDIR		= 		obj/
 OBJ			= 		$(addprefix $(OBJDIR), $(SRC:.cpp=.o))
 
