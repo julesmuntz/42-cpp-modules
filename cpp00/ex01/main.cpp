@@ -40,7 +40,7 @@ void get_contact(PhoneBook &data, std::string &field)
 		if (std::cin.eof())
 		{
 			std::cout << "EXIT" << std::endl;
-			break;
+			return;
 		}
 		else if (!input.empty() && str_is(&std::isdigit, input) && ft_stoi(input) >= 1 &&
 				((data.array_is_full == true && ft_stoi(input) <= 8) ||
@@ -53,7 +53,6 @@ void get_contact(PhoneBook &data, std::string &field)
 			std::cerr << "Field is empty, try again." << std::endl;
 		else
 			std::cerr << "Invalid input, try again." << std::endl;
-		
 	}
 	std::cout <<
 	std::endl << "\tFirst name:\t" << data.contact[ft_stoi(input)-1].Contact::get_first_name() <<
@@ -73,7 +72,7 @@ void get_input(const std::string &message, std::string &field, int (*function_is
 		if (std::cin.eof())
 		{
 			std::cout << "EXIT" << std::endl;
-			break;
+			return;
 		}
 		else if (!input.empty() && str_is(function_is, input))
 		{
