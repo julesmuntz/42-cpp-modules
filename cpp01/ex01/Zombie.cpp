@@ -2,16 +2,17 @@
 
 Zombie::Zombie(void)
 {
+	std::cout << "Zombie constructor called." << std::endl;
 }
 
 Zombie::Zombie(std::string n) : name(n)
 {
-	std::cout << "Zombie \"" << name << "\" built." << std::endl;
+	std::cout << "Zombie constructor called." << std::endl;
 }
 
 Zombie::~Zombie(void)
 {
-	std::cout << "Zombie \"" << name << "\" destroyed." << std::endl;
+	std::cout << "Zombie constructor destroyed." << std::endl;
 }
 
 void Zombie::announce(void)
