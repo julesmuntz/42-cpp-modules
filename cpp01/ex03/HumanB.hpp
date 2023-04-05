@@ -3,14 +3,16 @@
 
 #include "Weapon.hpp"
 
-class HumanB
+class HumanB 
 {
 	public:
 		HumanB(void);
+		HumanB(std::string);
 		~HumanB(void);
 		void attack();
+		void setWeapon(Weapon &weapon);
 	private:
-		std::string _weapon;
+		Weapon *_weapon;
 		std::string _name;
 };
 

@@ -1,11 +1,11 @@
 #include "Weapon.hpp"
 #include <iostream>
 
-Weapon::Weapon(void)
+Weapon::Weapon(std::string type) : _type(type)
 {
 }
 
-Weapon::Weapon(std::string type) : _type(type)
+Weapon::~Weapon(void)
 {
 }
 
