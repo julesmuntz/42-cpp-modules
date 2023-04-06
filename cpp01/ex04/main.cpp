@@ -13,15 +13,17 @@ int main(int ac, char **av)
 	std::string		replace = av[3];
 	std::string		line;
     std::ifstream	file(filename.c_str());
-	bool		found = false;
-	std::string 		rep_line;
-	size_t		index = 0;
+	bool			found = false;
+	std::string 	rep_line;
+	size_t			index = 0;
 
+	if (to_find.empty())
+		return std::cerr << "Nothing to replace" << std::endl, 0;
 	if (!file.is_open())
-		return std::cout << "File not found" << std::endl, 0;
+		return std::cerr << "File not found" << std::endl, 0;
 	while (getline(file, line))
 	{
-		while (line.find(to_find) != std::string::npos)
+		while ((index = line.find(to_find)) != std::string::npos)
 		{
 			found = true;
 			line.erase(index, to_find.length());
@@ -34,7 +36,6 @@ int main(int ac, char **av)
 		std::string		rep_filename = filename + ".replace";
 		std::ofstream	rep_file(rep_filename.c_str());
 		rep_file << rep_line;
-		rep_file.close();
 	}
 	else
 		std::cout << "Nothing to replace" << std::endl;
