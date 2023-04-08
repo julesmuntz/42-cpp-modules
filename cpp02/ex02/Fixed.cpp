@@ -100,7 +100,7 @@ Fixed Fixed::operator+(Fixed const &other) const
 
 Fixed Fixed::operator-(Fixed const &other) const
 {
-	return (Fixed(this->toFloat() + other.toFloat()));
+	return (Fixed(this->toFloat() - other.toFloat()));
 }
 
 Fixed Fixed::operator*(Fixed const &other) const
@@ -137,4 +137,36 @@ Fixed &Fixed::operator--()
 {
 	this->_fixedPointValue--;
 	return (*this);
+}
+
+Fixed Fixed::min(Fixed &a, Fixed &b)
+{
+	if (a._fixedPointValue <= b._fixedPointValue)
+		return a;
+	else
+		return b;
+}
+
+Fixed const Fixed::min(Fixed const &a, Fixed const &b)
+{
+	if (a._fixedPointValue <= b._fixedPointValue)
+		return a;
+	else
+		return b;
+}
+
+Fixed Fixed::max(Fixed &a, Fixed &b)
+{
+	if (a._fixedPointValue >= b._fixedPointValue)
+		return a;
+	else
+		return b;
+}
+
+Fixed const Fixed::max(Fixed const &a, Fixed const &b)
+{
+	if (a._fixedPointValue >= b._fixedPointValue)
+		return a;
+	else
+		return b;
 }
