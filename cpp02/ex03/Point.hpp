@@ -13,7 +13,6 @@ class Point
 					~Point();
 		float		getX() const;
 		float		getY() const;
-		float		getP() const;
 
 	private:
 		Fixed const _x;

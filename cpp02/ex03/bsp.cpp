@@ -2,7 +2,8 @@
 
 static float space(Fixed aX, Fixed aY, Fixed bX, Fixed bY, Fixed cX, Fixed cY)
 {
-	return std::abs((aX.toFloat() * (bY.toFloat() - cY.toFloat()) + bX.toFloat() * (cY.toFloat() - aY.toFloat()) + cX.toFloat() * (aY.toFloat() - bY.toFloat())) / 2.0);
+	return std::abs((aX.toFloat() * (bY.toFloat() - cY.toFloat()) + bX.toFloat() *
+	 (cY.toFloat() - aY.toFloat()) + cX.toFloat() * (aY.toFloat() - bY.toFloat())) / 2.0);
 }
 
 bool bsp(Point const a, Point const b, Point const c, Point const point)
@@ -15,6 +16,8 @@ bool bsp(Point const a, Point const b, Point const c, Point const point)
 	float spacePAC = space(aX, aY, pX, pY, cX, cY);
 	float spacePAB = space(aX, aY, bX, bY, pX, pY);
 
+	if (spacePBC == 0 || spacePAC == 0 || spacePAB == 0)
+		return false;
 	return (spaceABC == spacePBC + spacePAC + spacePAB);
 }
 
