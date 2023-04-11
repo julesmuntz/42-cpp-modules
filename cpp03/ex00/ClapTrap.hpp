@@ -29,6 +29,7 @@ class ClapTrap
 		uInt		_attackDamage;
 static	ClapTrap	*_head;
 		ClapTrap	*_next;
+		std::string	_className;
 };
 
 #endif
