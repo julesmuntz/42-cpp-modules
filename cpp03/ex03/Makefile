@@ -11,7 +11,7 @@ NAME		=		program
 
 CC			=		c++ 
 RM			=		rm -f
-CPPFLAGS	=		-Wall -Wextra -Werror -std=c++98
+CPPFLAGS	=		-Wall -Wextra -Werror -Wshadow -Wno-shadow -std=c++98
 
 $(OBJDIR)%.o:	%.cpp
 					@mkdir -p $(OBJDIR)

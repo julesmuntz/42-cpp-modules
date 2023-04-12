@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap()
+ClapTrap::ClapTrap() : _name(""), _hitPoints(10), _energyPoints(10), _attackDamage(0), _next(NULL)
 {
 	std::cout << "ClapTrap default constructor called" << std::endl;
 }
@@ -14,8 +14,14 @@ ClapTrap::ClapTrap(ClapTrap const &other)
 ClapTrap	&ClapTrap::operator=(ClapTrap const &other)
 {
 	std::cout << "ClapTrap copy assignment operator called" << std::endl;
-	_name = other._name;
-	return *this;
+	if (this != &other)
+	{
+		this->_name = other.getName();
+		this->_hitPoints = other.getHitPoints();
+		this->_energyPoints = other.getEnergyPoints();
+		this->_attackDamage = other.getAttackDamage();
+	}
+	return (*this);
 }
 
 ClapTrap *ClapTrap::_head = NULL;
@@ -95,7 +101,7 @@ void	ClapTrap::attack(std::string const &target)
 		current = current->_next;
 	}
 	if (found == false)
-		std::cout << _className << " \"" << target << "\" does not exist!" << std::endl;
+		std::cout << "Target \"" << target << "\" does not exist!" << std::endl;
 }
 
 void ClapTrap::takeDamage(uInt amount)
@@ -129,4 +135,24 @@ void ClapTrap::setEnergyPoints(uInt energyPoints)
 {
 	this->_energyPoints = energyPoints;
 	std::cout << _className << " " << this->_name << ": Energy points set to " << energyPoints << "!" << std::endl;
+}
+
+std::string ClapTrap::getName() const
+{
+	return this->_name;
+}
+
+uInt ClapTrap::getHitPoints() const
+{
+	return this->_hitPoints;
+}
+
+uInt ClapTrap::getEnergyPoints() const
+{
+	return this->_energyPoints;
+}
+
+uInt ClapTrap::getAttackDamage() const
+{
+	return this->_attackDamage;
 }
