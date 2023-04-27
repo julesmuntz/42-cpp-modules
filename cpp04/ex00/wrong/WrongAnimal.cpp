@@ -7,8 +7,8 @@ WrongAnimal::WrongAnimal() : _type("default")
 
 WrongAnimal::WrongAnimal(WrongAnimal const &other)
 {
-	std::cout << "WrongAnimal " << this->_type << " copy constructor called" << std::endl;
 	*this = other;
+	std::cout << "WrongAnimal " << this->_type << " copy constructor called" << std::endl;
 }
 
 WrongAnimal::~WrongAnimal()
@@ -18,8 +18,8 @@ WrongAnimal::~WrongAnimal()
 
 WrongAnimal	&WrongAnimal::operator=(WrongAnimal const &other)
 {
+	this->_type = other._type;
 	std::cout << "WrongAnimal " << this->_type << " copy assignment operator called" << std::endl;
-	this->_type = other.getType();
 	return *this;
 }
 

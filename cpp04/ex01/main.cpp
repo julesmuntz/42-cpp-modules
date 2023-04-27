@@ -21,5 +21,13 @@ int main()
 		delete arr[i];
 		std::cout << std::endl;
 	}
+	std::cout << std::endl << "[ DEEP COPY TEST ]" << std::endl << std::endl;
+	Dog basic;
+	{
+		std::cout << std::endl;
+		Dog tmp = basic;
+		std::cout << std::endl;
+	}
+	std::cout << std::endl;
 	return 0;
 }

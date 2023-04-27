@@ -7,8 +7,8 @@ AAnimal::AAnimal() : _type("default")
 
 AAnimal::AAnimal(AAnimal const &other)
 {
-	std::cout << "AAnimal " << this->_type << " copy constructor called" << std::endl;
 	*this = other;
+	std::cout << "AAnimal " << this->_type << " copy constructor called" << std::endl;
 }
 
 AAnimal::~AAnimal()
@@ -18,8 +18,8 @@ AAnimal::~AAnimal()
 
 AAnimal	&AAnimal::operator=(AAnimal const &other)
 {
+	this->_type = other._type;
 	std::cout << "AAnimal " << this->_type << " copy assignment operator called" << std::endl;
-	this->_type = other.getType();
 	return *this;
 }
 
