@@ -1,68 +1,40 @@
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main()
 {
-	std::cout << std::endl
-			  << "-------------------------------------------" << std::endl;
+	std::cout << std::endl;
 	{
-		Bureaucrat b("Alan", 242);
-		AForm f("V", 7, 3);
-		std::cout << f;
-		std::cout << b;
-		b.signAForm(&f);
-		std::cout << f;
+		Bureaucrat b("Arthur", 137);
+		ShrubberyCreationForm f("Home");
+		std::cout << std::endl << b << std::endl;
+		std::cout << f << std::endl;
+		b.signForm(&f);
+		b.executeForm(f);
+		std::cout << std::endl << f << std::endl;
 	}
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl
-			  << std::endl
-			  << "-------------------------------------------" << std::endl;
+	std::cout << std::endl << "-----------------------------------------------------------------" << std::endl << std::endl;
 	{
-		Bureaucrat b("Brian", 5);
-		AForm f("W", 4, 3);
-		std::cout << f;
-		std::cout << b;
-		b.signAForm(&f);
-		std::cout << f;
+		Bureaucrat b("Doctor", 45);
+		RobotomyRequestForm f("Patient");
+		std::cout << std::endl << b << std::endl;
+		std::cout << f << std::endl;
+		b.signForm(&f);
+		b.executeForm(f);
+		std::cout << std::endl << f << std::endl;
 	}
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl
-			  << std::endl
-			  << "-------------------------------------------" << std::endl;
+	std::cout << std::endl << "-----------------------------------------------------------------" << std::endl << std::endl;
 	{
-		Bureaucrat b("Carl", 0);
-		AForm f("X", 1, 3);
-		std::cout << f;
-		std::cout << b;
-		b.signAForm(&f);
-		std::cout << f;
+		Bureaucrat b("Zaphod", 1);
+		PresidentialPardonForm f("Citizen");
+		std::cout << std::endl << b << std::endl;
+		std::cout << f << std::endl;
+		b.signForm(&f);
+		b.executeForm(f);
+		std::cout << std::endl << f << std::endl;
 	}
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl
-			  << std::endl
-			  << "-------------------------------------------" << std::endl;
-	{
-		Bureaucrat b("David", 149);
-		AForm f("Y", 149, 3);
-		std::cout << f;
-		std::cout << b;
-		b.signAForm(&f);
-		std::cout << f;
-	}
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl
-			  << std::endl
-			  << "-------------------------------------------" << std::endl;
-	{
-		Bureaucrat b("Eric", -7);
-		AForm f("Z", 2, 3);
-		std::cout << f;
-		std::cout << b;
-		b.signAForm(&f);
-		std::cout << f;
-	}
-	std::cout << "-------------------------------------------" << std::endl;
-	std::cout << std::endl
-			  << std::endl;
+	std::cout << std::endl;
 	return 0;
 }

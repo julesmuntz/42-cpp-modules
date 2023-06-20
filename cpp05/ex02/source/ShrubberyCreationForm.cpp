@@ -1,4 +1,5 @@
 #include "ShrubberyCreationForm.hpp"
+#include <fstream>
 
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("ShrubberyCreationForm", 145, 137), _target("default")
 {
@@ -27,3 +28,23 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 	std::cout << "ShrubberyCreationForm destructor called" << std::endl;
 }
 
+void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
+{
+		if (executor.getGrade() <= 137 && executor.getGrade() >= 1)
+		{
+			std::string filename = this->_target + "_shrubbery";
+			std::ofstream file(filename.c_str());
+			file << "               ,@@@@@@@," << std::endl
+				 << "       ,,,.   ,@@@@@@/@@,  .oo8888o." << std::endl
+				 << "    ,&&%&%&&%,@@@@@/@@@@@@,8888\\88/8o" << std::endl
+				 << "   ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'" << std::endl
+				 << "   %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'" << std::endl
+				 << "   %&&%/ %&%&%&@@\\ V /@@' `88\\8 `/88'" << std::endl
+				 << "   `&%\\ ` /%&'    |.|        \\ '|8'" << std::endl
+				 << "       |o|        | |         | |" << std::endl
+				 << "       |.|        | |         | |" << std::endl
+				 << "    \\\\/ ._\\//_/__/  ,\\_//__\\\\/.  \\_//__/_" << std::endl;
+		}
+		else
+			throw Bureaucrat::GradeTooLowException();
+}

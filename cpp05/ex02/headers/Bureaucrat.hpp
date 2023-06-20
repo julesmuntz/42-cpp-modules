@@ -41,7 +41,8 @@ public:
 	void incrementGrade();
 	void decrementGrade();
 
-	void signAForm(AForm *f) const;
+	void signForm(AForm *f) const;
+	void executeForm(AForm const &f) const;
 
 private:
 	std::string const _name;

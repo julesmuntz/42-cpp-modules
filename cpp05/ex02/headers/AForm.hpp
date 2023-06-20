@@ -22,6 +22,8 @@ public:
 	void beSigned(Bureaucrat *b);
 	void setSigned();
 
+	virtual void execute(Bureaucrat const &executor) const = 0;
+
 private:
 	std::string const _name;
 	int const _signGrade;

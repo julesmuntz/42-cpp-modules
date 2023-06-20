@@ -91,7 +91,7 @@ void Bureaucrat::decrementGrade()
 	}
 }
 
-void Bureaucrat::signAForm(AForm *f) const
+void Bureaucrat::signForm(AForm *f) const
 {
 	try
 	{
@@ -104,5 +104,20 @@ void Bureaucrat::signAForm(AForm *f) const
 	catch (Bureaucrat::GradeTooLowException &e)
 	{
 		std::cout << this->_name << " couldn\'t sign " << f->getName() << " because " << e.what() << std::endl;
+	}
+}
+
+void Bureaucrat::executeForm(AForm const &f) const
+{
+	try
+	{
+		f.execute(*this);
+		std::cout << "\033[0;33m" << this->_name << " executed " << f.getName() << "\033[0;0m" << std::endl;
+	}
+	catch (Bureaucrat::GradeTooLowException &e)
+	{
+		if (f.getName() == "RobotomyRequestForm" && f.getSignGrade() == 72 && f.getExecGrade() == 45)
+			std::cout << "\033[0;31mThe robotomy failed.\033[0;0m" << std::endl;
+		std::cout << this->_name << " couldn\'t execute " << f.getName() << " because " << e.what() << std::endl;
 	}
 }
