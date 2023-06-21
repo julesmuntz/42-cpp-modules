@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Bureaucrat.hpp"
-#include "Intern.hpp"
 
 class Bureaucrat;
 

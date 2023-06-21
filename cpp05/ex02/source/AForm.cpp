@@ -44,7 +44,7 @@ bool AForm::getSigned() const
 
 AForm::AForm(std::string const name, int signGrade, int execGrade) : _name(name), _signGrade(signGrade), _execGrade(execGrade), _isSigned(false)
 {
-	std::cout << "Form " << name << " (grade " << signGrade << ") constructor called" << std::endl;
+	std::cout << "Form " << name << " (Sign: " << signGrade << ", Exec: " << execGrade << ") constructor called" << std::endl;
 	try
 	{
 		if (signGrade < 1)

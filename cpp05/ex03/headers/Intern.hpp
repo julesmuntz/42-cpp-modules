@@ -22,4 +22,24 @@ public:
 	AForm *shrubbery(std::string target);
 	AForm *robotomy(std::string target);
 	AForm *presidential(std::string target);
+
+private:
+	void collectForm(AForm *form);
+
+	class FormNotFoundException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return "\033[0;31mThe form passed as parameter doesn\'t exist!\033[0;0m";
+		}
+	};
+
+	struct Node
+	{
+		AForm *form;
+		Node *next;
+	};
+
+	Node *_formList;
 };

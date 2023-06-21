@@ -14,8 +14,6 @@ public:
 
 	void execute(Bureaucrat const &executor) const;
 
-	std::string name;
-
 private:
 	std::string _target;
 };
