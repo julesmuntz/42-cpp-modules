@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
+#include <limits>
 
 class ScalarConverter
 {
@@ -16,4 +18,6 @@ private:
 	~ScalarConverter();
 	static std::string getChar(std::string input);
 	static std::string getInt(std::string input);
+	static std::string getFloat(std::string input);
+	static std::string getDouble(std::string input);
 };
