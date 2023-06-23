@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
 class ScalarConverter
 {
@@ -13,4 +14,5 @@ private:
 	ScalarConverter(const ScalarConverter &other);
 	ScalarConverter &operator=(const ScalarConverter &other);
 	~ScalarConverter();
+	static std::string getChar(std::string input);
 };

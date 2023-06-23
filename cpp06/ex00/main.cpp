@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		std::cout << "Please provide a value to convert." << std::endl;
+		std::cout << std::endl << "Works with the following arguments:" << std::endl << std::endl << "\t\"./convert\" \"<value>\"" << std::endl << std::endl;
 	}
 	return 0;
 }

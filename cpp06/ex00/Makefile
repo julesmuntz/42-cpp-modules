@@ -4,7 +4,7 @@ SRC			=		main.cpp			\
 OBJDIR		=		obj/
 OBJ			=		$(addprefix $(OBJDIR), $(SRC:.cpp=.o))
 
-NAME		=		program
+NAME		=		convert
 
 CC			=		c++
 RM			=		rm -f
