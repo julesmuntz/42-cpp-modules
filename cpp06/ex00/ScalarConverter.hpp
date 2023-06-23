@@ -15,4 +15,5 @@ private:
 	ScalarConverter &operator=(const ScalarConverter &other);
 	~ScalarConverter();
 	static std::string getChar(std::string input);
+	static std::string getInt(std::string input);
 };

@@ -37,6 +37,43 @@ std::string ScalarConverter::getChar(std::string input)
 		return "Non displayable";
 }
 
+std::string ScalarConverter::getInt(std::string input)
+{
+	std::istringstream iss(input);
+	int value;
+	if (!(iss >> value))
+		return ("impossible");
+	int i = 0;
+	std::string output;
+	bool dot_found = false;
+	while (input[i])
+	{
+		if (i == 0 && (input[i] == '+' || input[i] == '-'))
+		{
+			if (input[i] == '-')
+				output += input[i];
+			i++;
+		}
+		if (dot_found == false)
+			output += input[i];
+		if (dot_found == false && (input[i] == '.'))
+		{
+			dot_found = true;
+			i++;
+		}
+		if (dot_found == true && (i == static_cast<int>(input.length()-1) && input[i] == 'f'))
+			i++;
+		if (!isdigit(input[i]))
+			break;
+		i++;
+	}
+	if (input[i])
+		return ("impossible");
+	if (output.end()[-1] == '.')
+		output.erase(output.length()-1);
+	return (output);
+}
+
 void ScalarConverter::convert(std::string input)
 {
 	if (input == "-inf" || input == "+inf" || input == "nan" || input == "-inff" || input == "+inff" || input == "nanf")
@@ -49,5 +86,6 @@ void ScalarConverter::convert(std::string input)
 		return;
 	}
 	std::cout << "char: " << ScalarConverter::getChar(input) << std::endl;
+	std::cout << "int: " << ScalarConverter::getInt(input) << std::endl;
 
 }
