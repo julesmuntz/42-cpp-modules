@@ -3,9 +3,9 @@
 #include <iostream>
 #include <string>
 
-template<typename T>
-void iter(T *arrayAddress, int arrayLen, void (*function)(T &))
+template<typename A, typename B, typename C>
+void iter(A *arrayPtr, B arrayLen, C (*function)(A &))
 {
-	for (int i = 0; i < arrayLen; i++)
-		function(arrayAddress[i]);
+	for (B i = 0; i < arrayLen; i++)
+		function(arrayPtr[i]);
 }
