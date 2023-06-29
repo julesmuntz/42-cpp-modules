@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 template <class T>
 class Array
@@ -9,14 +10,19 @@ class Array
 public:
 	Array();
 	~Array();
-	Array(unsigned int n);
+	Array(unsigned n);
 	Array(Array const &copy);
 	Array &operator=(Array const &rhs);
-	unsigned int size();
+	T &operator[](unsigned index);
+	unsigned size();
+	void setArray(T *array);
 
 private:
 	T *_array;
-	unsigned int _size;
+	unsigned _size;
 };
+
+template <typename T>
+std::ostream &operator<<(std::ostream &o, Array<T> &rhs);
 
 #include "Array.tpp"
