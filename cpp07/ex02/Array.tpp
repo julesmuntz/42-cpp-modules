@@ -63,16 +63,8 @@ std::ostream &operator<<(std::ostream &o, Array<T> &rhs)
 template <typename T>
 T &Array<T>::operator[](unsigned index)
 {
-	try
-	{
-		if (index >= this->_size)
-			throw std::exception();
-	}
-	catch (std::exception &e)
-	{
-		std::cout << "\033[0;31mException:           Index \"" << index << "\" out of bounds!\033[0;0m" << std::endl
-				  << "\tUninitialized value: \033[0;36m";
-	}
+	if (index >= this->_size)
+		throw std::exception();
 	return this->_array[index];
 }
 
