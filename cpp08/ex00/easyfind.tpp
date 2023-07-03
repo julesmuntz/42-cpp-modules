@@ -3,7 +3,7 @@
 template <typename T>
 int easyfind(T a, int b)
 {
-	std::vector<int>::iterator it = find(a.begin(), a.end(), b);
+	typename T::iterator it = find(a.begin(), a.end(), b);
 	if (it == a.end())
 	{
 		std::cerr << "\033[0;31mElement \"" << b << "\" not found!\033[0;0m" << std::endl;
