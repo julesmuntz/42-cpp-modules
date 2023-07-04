@@ -44,4 +44,20 @@ public:
 		std::cout << "Value \"" << value << "\" pushed." << std::endl;
 		std::stack<T>::push(value);
 	}
+
+	MutantStack()
+	{
+	}
+	~MutantStack()
+	{
+	}
+	MutantStack(MutantStack const &copy) : std::stack<T>(copy)
+	{
+	}
+	MutantStack &operator=(MutantStack const &rhs)
+	{
+		if (this != &rhs)
+			std::stack<T>::operator=(rhs);
+		return *this;
+	}
 };
