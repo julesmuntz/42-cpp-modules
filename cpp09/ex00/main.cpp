@@ -30,71 +30,123 @@ static int maxDayInMonth(int month, int year)
 	}
 }
 
-static size_t lenUntil(const std::string &str, char c)
+static void checkDataBase(std::map<std::string, double> &dataBaseMap)
 {
-	size_t pos = str.find(c);
-	if (pos != std::string::npos)
-		return pos;
-	else
-		return str.length();
+	std::ifstream file("data.csv");
+	if (!file)
+	{
+		std::cerr << "\033[0;31mError: file \"data.csv\" not found.\033[0;0m" << std::endl;
+		return;
+	}
+	int line = 0;
+	try
+	{
+		bool firstLine = true;
+		std::string lineStr;
+		while (std::getline(file, lineStr))
+		{
+			line++;
+			if (firstLine == true)
+			{
+				firstLine = false;
+				continue;
+			}
+			std::string date = lineStr.substr(0, lineStr.find(','));
+			double value = strtod(lineStr.substr(lineStr.find(',') + 1).c_str(), NULL);
+			if (date.size() < 10)
+				throw std::exception();
+			size_t firstDash = date.find('-');
+			size_t secondDash = date.find('-', firstDash + 1);
+			if (firstDash == std::string::npos || secondDash == std::string::npos)
+				throw std::exception();
+			short year = atoi(date.substr(0, firstDash).c_str());
+			short month = atoi(date.substr(firstDash + 1, secondDash - firstDash - 1).c_str());
+			short day = atoi(date.substr(secondDash + 1).c_str());
+			if (year < 0 || month < 1 || month > 12 ||
+				day < 1 || day > maxDayInMonth(month, year))
+				throw std::exception();
+			dataBaseMap[date] = value;
+		}
+		file.close();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << "\033[0;31mError: invalid database content (line " << line << ")\033[0;0m" << std::endl;
+	}
+	return;
 }
 
-static void parseDate(BitcoinExchange &be, const std::string &dateStr)
+static double getExchangeRate(std::string date, double value, std::map<std::string, double> &dataBaseMap)
 {
-	if (dateStr.size() < 10)
+	double result;
+	std::map<std::string, double>::iterator it = dataBaseMap.find(date);
+	if (it != dataBaseMap.end())
+		result = value * it->second;
+	return result;
+}
+
+static void checkInput(std::map<std::string, double> &dataBaseMap, int ac, char *arg)
+{
+	std::ifstream file(arg);
+	if (!file || ac != 2)
 	{
-		throw BitcoinExchange::InvalidLineException();
+		std::cerr << "\033[0;31mError: could not open file.\033[0;0m" << std::endl;
+		return;
 	}
-	int yearLen = lenUntil(dateStr, '-');
-	be.date[YEAR] = atoi(dateStr.substr(0, yearLen).c_str());
-	be.date[MONTH] = atoi(dateStr.substr((yearLen + 1), 2).c_str());
-	be.date[DAY] = atoi(dateStr.substr((yearLen + 4), 2).c_str());
-	if (be.date[YEAR] < 0 || be.date[MONTH] < 1 || be.date[MONTH] > 12 ||
-		be.date[DAY] < 1 || be.date[DAY] > maxDayInMonth(be.date[MONTH], be.date[YEAR]))
+	bool firstLine = true;
+	std::string lineStr;
+	while (std::getline(file, lineStr))
 	{
-		throw BitcoinExchange::InvalidDateException();
+		if (firstLine == true)
+		{
+			firstLine = false;
+			continue;
+		}
+		std::string date = lineStr.substr(0, lineStr.find('|') - 1);
+		double value = strtod(lineStr.substr(lineStr.find('|') + 2).c_str(), NULL);
+		try
+		{
+			if (value < 0)
+				throw BitcoinExchange::NegativeValueException();
+			if (value > 1000)
+				throw BitcoinExchange::TooLargeValueException();
+			if (date.size() < 10)
+				throw BitcoinExchange::InvalidSyntaxException();
+			size_t firstDash = date.find('-');
+			size_t secondDash = date.find('-', firstDash + 1);
+			if (firstDash == std::string::npos || secondDash == std::string::npos)
+				std::cerr << "\033[0;31mError: bad input => " << date << "\033[0m" << std::endl;
+			short year = atoi(date.substr(0, firstDash).c_str());
+			short month = atoi(date.substr(firstDash + 1, secondDash - firstDash - 1).c_str());
+			short day = atoi(date.substr(secondDash + 1).c_str());
+			if (year < 0 || month < 1 || month > 12 ||
+				day < 1 || day > maxDayInMonth(month, year))
+				std::cerr << "\033[0;31mError: bad input => " << date << "\033[0m" << std::endl;
+			else
+				std::cout << date << " => " << value << " = " << getExchangeRate(date, value, dataBaseMap) << std::endl;
+		}
+		catch (BitcoinExchange::NegativeValueException &e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
+		catch (BitcoinExchange::TooLargeValueException &e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
+		catch (BitcoinExchange::InvalidSyntaxException &e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
 	}
+	file.close();
+	return;
 }
 
 int main(int ac, char **av)
 {
-	if (ac != 2)
-		return 0;
-	std::map<std::string, BitcoinExchange> exchangeData;
-	std::ifstream file(av[1]);
-	if (file)
-	{
-		std::string line;
-		while (std::getline(file, line))
-		{
-			std::string dateStr = line.substr(0, line.find(','));
-			float value = atof(line.substr(line.find(',') + 1).c_str());
-			BitcoinExchange be;
-			be.value = value;
-			try
-			{
-				if (be.value < 0 || be.value > 1000)
-					throw BitcoinExchange::InvalidValueException();
-				parseDate(be, dateStr);
-				std::cout << line << std::endl;
-			}
-			catch (BitcoinExchange::InvalidLineException &e)
-			{
-				std::cerr << e.what() << std::endl;
-			}
-			catch (BitcoinExchange::InvalidDateException &e)
-			{
-				std::cerr << e.what() << std::endl;
-			}
-			catch (BitcoinExchange::InvalidValueException &e)
-			{
-				std::cerr << e.what() << std::endl;
-			}
-			exchangeData[dateStr] = be;
-		}
-		file.close();
-	}
-	else
-		std::cerr << "Error: file not found" << std::endl;
+	std::map<std::string, double> dataBaseMap;
+	std::map<std::string, double> inputMap;
+	checkDataBase(dataBaseMap);
+	checkInput(dataBaseMap, ac, av[1]);
 	return 0;
 }

@@ -18,31 +18,31 @@ public:
 	BitcoinExchange(BitcoinExchange const &copy);
 	BitcoinExchange &operator=(BitcoinExchange const &copy);
 
-	float value;
+	double value;
 	short date[3];
 
-	class InvalidLineException : public std::exception
+	class NegativeValueException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return "\033[0;31mError: not a positive number.\033[0m";
+		}
+	};
+	class TooLargeValueException : public std::exception
+	{
+	public:
+		virtual const char *what() const throw()
+		{
+			return "\033[0;31mError: too large a number.\033[0m";
+		}
+	};
+	class InvalidSyntaxException : public std::exception
 	{
 	public:
 		virtual const char *what() const throw()
 		{
 			return "\033[0;31mError: invalid line syntax.\033[0m";
-		}
-	};
-	class InvalidDateException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw()
-		{
-			return "\033[0;31mError: invalid date. (Gregorian calendar)\033[0m";
-		}
-	};
-	class InvalidValueException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw()
-		{
-			return "\033[0;31mError: invalid value. (range 0-1000)\033[0m";
 		}
 	};
 };
