@@ -79,9 +79,14 @@ static void checkDataBase(std::map<std::string, double> &dataBaseMap)
 static double getExchangeRate(std::string date, double value, std::map<std::string, double> &dataBaseMap)
 {
 	double result;
-	std::map<std::string, double>::iterator it = dataBaseMap.find(date);
-	if (it != dataBaseMap.end())
+	std::map<std::string, double>::iterator it = dataBaseMap.upper_bound(date);
+	if (it != dataBaseMap.begin())
+	{
+		--it;
 		result = value * it->second;
+	}
+	else
+		result = 0;
 	return result;
 }
 
@@ -145,7 +150,6 @@ static void checkInput(std::map<std::string, double> &dataBaseMap, int ac, char 
 int main(int ac, char **av)
 {
 	std::map<std::string, double> dataBaseMap;
-	std::map<std::string, double> inputMap;
 	checkDataBase(dataBaseMap);
 	checkInput(dataBaseMap, ac, av[1]);
 	return 0;
