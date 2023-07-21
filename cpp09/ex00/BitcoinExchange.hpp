@@ -37,12 +37,4 @@ public:
 			return "\033[0;31mError: too large a number.\033[0m";
 		}
 	};
-	class InvalidSyntaxException : public std::exception
-	{
-	public:
-		virtual const char *what() const throw()
-		{
-			return "\033[0;31mError: invalid line syntax.\033[0m";
-		}
-	};
 };

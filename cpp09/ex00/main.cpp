@@ -46,9 +46,10 @@ static void checkDataBase(std::map<std::string, double> &dataBaseMap)
 		while (std::getline(file, lineStr))
 		{
 			line++;
-			if (firstLine == true)
+			if (firstLine == true || lineStr.length() == 0)
 			{
-				firstLine = false;
+				if (lineStr.length() > 0)
+					firstLine = false;
 				continue;
 			}
 			std::string date = lineStr.substr(0, lineStr.find(','));
@@ -98,15 +99,11 @@ static void checkInput(std::map<std::string, double> &dataBaseMap, int ac, char 
 		std::cerr << "\033[0;31mError: could not open file.\033[0;0m" << std::endl;
 		return;
 	}
-	bool firstLine = true;
 	std::string lineStr;
 	while (std::getline(file, lineStr))
 	{
-		if (firstLine == true)
-		{
-			firstLine = false;
+		if (lineStr.length() == 0)
 			continue;
-		}
 		std::string date = lineStr.substr(0, lineStr.find('|') - 1);
 		double value = strtod(lineStr.substr(lineStr.find('|') + 2).c_str(), NULL);
 		try
@@ -116,7 +113,7 @@ static void checkInput(std::map<std::string, double> &dataBaseMap, int ac, char 
 			if (value > 1000)
 				throw BitcoinExchange::TooLargeValueException();
 			if (date.size() < 10)
-				throw BitcoinExchange::InvalidSyntaxException();
+				throw std::exception();
 			size_t firstDash = date.find('-');
 			size_t secondDash = date.find('-', firstDash + 1);
 			if (firstDash == std::string::npos || secondDash == std::string::npos)
@@ -138,9 +135,9 @@ static void checkInput(std::map<std::string, double> &dataBaseMap, int ac, char 
 		{
 			std::cerr << e.what() << std::endl;
 		}
-		catch (BitcoinExchange::InvalidSyntaxException &e)
+		catch (std::exception &e)
 		{
-			std::cerr << e.what() << std::endl;
+			std::cerr << "";
 		}
 	}
 	file.close();
