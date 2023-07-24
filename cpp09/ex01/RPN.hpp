@@ -13,5 +13,5 @@ public:
 	~RPN();
 	RPN(RPN const &copy);
 	RPN &operator=(RPN const &copy);
-	double calculator(std::string operation);
+	void printResult(std::string operation);
 };

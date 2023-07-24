@@ -21,7 +21,7 @@ RPN &RPN::operator=(RPN const &copy)
 	return (*this);
 }
 
-double RPN::calculator(std::string operation)
+void RPN::printResult(std::string operation)
 {
 	try
 	{
@@ -66,11 +66,10 @@ double RPN::calculator(std::string operation)
 		}
 		if (stk.size() > 1)
 			throw std::exception();
-		return stk.top();
+		std::cout << stk.top() << std::endl;
 	}
 	catch (std::exception &e)
 	{
 		std::cout << "\033[0;31mError: invalid expression.\033[0;0m" << std::endl;
-		exit(EXIT_FAILURE);
 	}
 }

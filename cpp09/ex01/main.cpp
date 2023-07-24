@@ -8,6 +8,6 @@ int main(int ac, char **av)
 		return 1;
 	}
 	RPN rpn;
-	std::cout << rpn.calculator(av[1]) << std::endl;
+	rpn.printResult(av[1]);
 	return 0;
 }
